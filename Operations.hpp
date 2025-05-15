@@ -253,12 +253,20 @@ struct remove_from_back_of_sll
   void operator()( const auto & )
   {
     ///////////////////////// TO-DO (11) //////////////////////////////
-    if( !my_sll.empty() )
+if( !my_sll.empty() )
+{
+    auto prev = my_sll.before_begin();      // node BEFORE current
+    for( auto curr = my_sll.begin(); ; ++prev, ++curr )
     {
-      auto before = my_sll.before_begin();
-      for( auto it = my_sll.begin(); std::next( it ) != my_sll.end(); ++before, ++it ) {}
-      my_sll.erase_after( before );
+        auto nxt = curr;                    // compute next without std::next
+        ++nxt;
+        if( nxt == my_sll.end() )           // curr is the last element
+        {
+            my_sll.erase_after( prev );     // remove tail
+            break;
+        }
     }
+}
     /////////////////////// END-TO-DO (11) ////////////////////////////
   }
 
