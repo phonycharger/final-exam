@@ -173,9 +173,9 @@ std::string const & GroceryItem::productName() const &
 
 // price() const    (L-value and, because there is no R-value overload, R-value objects)
 ///////////////////////// TO-DO (11) //////////////////////////////
-std::string const & GroceryItem::price() const &
+double GroceryItem::price() const &
 {
-return _price;
+    return _price;
 }
 /////////////////////// END-TO-DO (11) ////////////////////////////
 
