@@ -168,8 +168,23 @@ std::string const & GroceryItem::productName() const &
 
 // price() const    (L-value and, because there is no R-value overload, R-value objects)
 ///////////////////////// TO-DO (11) //////////////////////////////
-double GroceryItem::price() const &
-{ return _price; }
+if( !my_sll.empty() )
+{
+  auto before = my_sll.before_begin();
+  auto it     = my_sll.begin();
+  while( it != my_sll.end() )
+  {
+    auto nxt = it;
+    ++nxt;                           // one step look-ahead
+    if( nxt == my_sll.end() )        // "it" is last element
+    {
+      my_sll.erase_after( before );  // remove it
+      break;
+    }
+    ++before;
+    ++it;
+  }
+}
 /////////////////////// END-TO-DO (11) ////////////////////////////
 
 
