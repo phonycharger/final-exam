@@ -49,7 +49,7 @@ namespace    // unnamed, anonymous namespace
 
 // Default and Conversion Constructor
 ///////////////////////// TO-DO (2) //////////////////////////////
-: _upcCode    { std::move( upcCode     ) }
+, _upcCode    { std::move( upcCode     ) }
 , _brandName  { std::move( brandName   ) }
 , _productName{ std::move( productName ) }
 , _price      { price }
@@ -61,7 +61,7 @@ namespace    // unnamed, anonymous namespace
 
 // Copy constructor
 ///////////////////////// TO-DO (3) //////////////////////////////
-: _upcCode    { other._upcCode     }
+, _upcCode    { other._upcCode     }
 , _brandName  { other._brandName   }
 , _productName{ other._productName }
 , _price      { other._price       }
@@ -248,6 +248,7 @@ GroceryItem & GroceryItem::productName( std::string newProductName ) &
 
 // price(...)
 ///////////////////////// TO-DO (18) //////////////////////////////
+GroceryItem & GroceryItem::price( double newPrice ) &
 {
   _price = newPrice;
   return *this;
