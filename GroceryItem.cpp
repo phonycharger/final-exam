@@ -110,14 +110,13 @@ GroceryItem & GroceryItem::operator=( GroceryItem const & rhs ) &
 // Move Assignment Operator
 ///////////////////////// TO-DO (6) //////////////////////////////
 GroceryItem & GroceryItem::operator=( GroceryItem && rhs ) & noexcept
-
 {
   if( this != &rhs )
   {
-    _upcCode      = std::move( rhs._upcCode );
-    _brandName    = std::move( rhs._brandName );
-    _productName  = std::move( rhs._productName );
-    _price        = rhs._price;
+    _upcCode     = std::move( rhs._upcCode );
+    _brandName   = std::move( rhs._brandName );
+    _productName = std::move( rhs._productName );
+    _price       = rhs._price;
   }
   return *this;
 }
@@ -127,7 +126,7 @@ GroceryItem & GroceryItem::operator=( GroceryItem && rhs ) & noexcept
 
 // Destructor
 ///////////////////////// TO-DO (7) //////////////////////////////
-
+GroceryItem::~GroceryItem() noexcept = default;
 /////////////////////// END-TO-DO (7) ////////////////////////////
 
 
