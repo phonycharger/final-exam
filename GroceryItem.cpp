@@ -124,7 +124,10 @@ GroceryItem & GroceryItem::operator=( GroceryItem && rhs ) & noexcept
 
 // Destructor
 ///////////////////////// TO-DO (7) //////////////////////////////
-GroceryItem::~GroceryItem() noexcept = default;
+GroceryItem::~GroceryItem() noexcept
+{
+    /* nothing to do – all members clean up themselves */
+}
 /////////////////////// END-TO-DO (7) ////////////////////////////
 
 
