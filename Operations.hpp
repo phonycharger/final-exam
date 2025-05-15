@@ -27,8 +27,7 @@ struct insert_at_back_of_vector
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (1) //////////////////////////////
-      /// Write the lines of code to insert "object" at the back of "my_vector"
-
+    my_vector.push_back( object );
     /////////////////////// END-TO-DO (1) ////////////////////////////
   }
 
@@ -49,8 +48,7 @@ struct insert_at_back_of_dll
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (2) //////////////////////////////
-      /// Write the lines of code to insert "object" at the back of "my_dll"
-
+    my_dll.push_back( object );
     /////////////////////// END-TO-DO (2) ////////////////////////////
   }
 
@@ -71,9 +69,9 @@ struct insert_at_back_of_sll
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (3) //////////////////////////////
-      /// Write the lines of code to insert "object" at the back of "my_sll". Since the SLL has no size() function and no tail pointer, you
-      /// must walk the list looking for the last node. Hint:  Do not attempt to insert after "my_sll.end()"
-
+    auto before = my_sll.before_begin();
+    for( auto it = my_sll.begin(); it != my_sll.end(); ++before, ++it ) {}
+    my_sll.insert_after( before, object );
     /////////////////////// END-TO-DO (3) ////////////////////////////
   }
 
@@ -94,8 +92,7 @@ struct insert_at_front_of_vector
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (4) //////////////////////////////
-      /// Write the lines of code to insert "object" at the front of "my_vector"
-
+    my_vector.insert( my_vector.begin(), object );
     /////////////////////// END-TO-DO (4) ////////////////////////////
   }
 
@@ -116,8 +113,7 @@ struct insert_at_front_of_dll
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (5) //////////////////////////////
-      /// Write the lines of code to insert "object" at the front of "my_dll"
-
+    my_dll.push_front( object );
     /////////////////////// END-TO-DO (5) ////////////////////////////
   }
 
@@ -138,8 +134,7 @@ struct insert_at_front_of_sll
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (6) //////////////////////////////
-      /// Write the lines of code to insert "object" at the front of "my_sll"
-
+    my_sll.push_front( object );
     /////////////////////// END-TO-DO (6) ////////////////////////////
   }
 
@@ -161,10 +156,7 @@ struct insert_into_bst
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (7) //////////////////////////////
-      /// Write the lines of code to insert the object's key and value pair into "my_bst". To obtain the object's key, determine
-      /// SomeObject's base type and review your prior homework class interface. For example, if SomeObject's base type is a
-      /// HotelReservation, you might obtain the reservation's key with object.reservationNumber().
-
+    my_bst.emplace( object.upcCode(), object );
     /////////////////////// END-TO-DO (7) ////////////////////////////
   }
 
@@ -186,10 +178,7 @@ struct insert_into_hash_table
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (8) //////////////////////////////
-      /// Write the lines of code to insert the object's key and value pair into "my_hash_table". To obtain the object's key, determine
-      /// SomeObject's base type and review your prior homework class interface. For example, if SomeObject's base type is a
-      /// HotelReservation, you might obtain the reservation's key with object.reservationNumber().
-
+    my_hash_table.emplace( object.upcCode(), object );
     /////////////////////// END-TO-DO (8) ////////////////////////////
   }
 
@@ -222,9 +211,7 @@ struct remove_from_back_of_vector
   void operator()( const auto & )
   {
     ///////////////////////// TO-DO (9) //////////////////////////////
-      /// Write the lines of code to remove the object at the back of "my_vector". Remember, attempting to remove an object from an empty
-      /// data structure is a logic error.  Include code to avoid that.
-
+    if( !my_vector.empty() ) my_vector.pop_back();
     /////////////////////// END-TO-DO (9) ////////////////////////////
   }
 
@@ -245,9 +232,7 @@ struct remove_from_back_of_dll
   void operator()( const auto & )
   {
     ///////////////////////// TO-DO (10) //////////////////////////////
-      /// Write the lines of code to remove the object at the back of "my_dll". Remember, attempting to remove an object from an empty data
-      /// structure is a logic error.  Include code to avoid that.
-
+    if( !my_dll.empty() ) my_dll.pop_back();
     /////////////////////// END-TO-DO (10) ////////////////////////////
   }
 
@@ -268,9 +253,12 @@ struct remove_from_back_of_sll
   void operator()( const auto & )
   {
     ///////////////////////// TO-DO (11) //////////////////////////////
-      /// Write the lines of code to remove the object at the back of "my_sll". Remember, attempting to remove an object from an empty data
-      /// structure is a logic error.  Include code to avoid that.
-
+    if( !my_sll.empty() )
+    {
+      auto before = my_sll.before_begin();
+      for( auto it = my_sll.begin(); std::next( it ) != my_sll.end(); ++before, ++it ) {}
+      my_sll.erase_after( before );
+    }
     /////////////////////// END-TO-DO (11) ////////////////////////////
   }
 
@@ -291,9 +279,7 @@ struct remove_from_front_of_vector
   void operator()( const auto & )
   {
     ///////////////////////// TO-DO (12) //////////////////////////////
-      /// Write the lines of code to remove the object at the front of "my_vector". Remember, attempting to remove an object from an empty
-      /// data structure is a logic error.  Include code to avoid that.
-
+    if( !my_vector.empty() ) my_vector.erase( my_vector.begin() );
     /////////////////////// END-TO-DO (12) ////////////////////////////
   }
 
@@ -314,9 +300,7 @@ struct remove_from_front_of_dll
   void operator()( const auto & )
   {
     ///////////////////////// TO-DO (13) //////////////////////////////
-      /// Write the lines of code to remove the object at the front of "my_dll". Remember, attempting to remove an object from an empty data
-      /// structure is a logic error.  Include code to avoid that.
-
+    if( !my_dll.empty() ) my_dll.pop_front();
     /////////////////////// END-TO-DO (13) ////////////////////////////
   }
 
@@ -337,9 +321,7 @@ struct remove_from_front_of_sll
   void operator()( const auto & )
   {
     ///////////////////////// TO-DO (14) //////////////////////////////
-      /// Write the lines of code to remove the object at the front of "my_sll". Remember, attempting to remove an object from an empty data
-      /// structure is a logic error.  Include code to avoid that.
-
+    if( !my_sll.empty() ) my_sll.pop_front();
     /////////////////////// END-TO-DO (14) ////////////////////////////
   }
 
@@ -361,9 +343,7 @@ struct remove_from_bst
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (15) //////////////////////////////
-      /// Write the lines of code to remove the object from "my_bst" that has a matching key. Remember, attempting to remove an object from
-      /// an empty data structure is a logic error.  Include code to avoid that.
-
+    if( !my_bst.empty() ) my_bst.erase( object.upcCode() );
     /////////////////////// END-TO-DO (15) ////////////////////////////
   }
 
@@ -385,9 +365,7 @@ struct remove_from_hash_table
   void operator()( const SomeObject & object )
   {
     ///////////////////////// TO-DO (16) //////////////////////////////
-      /// Write the lines of code to remove the object from "my_hash_table" that has a matching key. Remember, attempting to remove an
-      /// object from an empty data structure is a logic error.  Include code to avoid that.
-
+    if( !my_hash_table.empty() ) my_hash_table.erase( object.upcCode() );
     /////////////////////// END-TO-DO (16) ////////////////////////////
   }
 
@@ -418,9 +396,9 @@ struct search_within_vector
   SomeObject * operator()( const auto & )
   {
     ///////////////////////// TO-DO (17) //////////////////////////////
-      /// Write the lines of code to search for the object within "my_vector" with a key matching "target_key".  Return a pointer to that
-      /// object immediately upon finding it, or a null pointer when you know the object is not in the container.
-
+    for( auto & elem : my_vector )
+      if( elem.upcCode() == target_key ) return &elem;
+    return nullptr;
     /////////////////////// END-TO-DO (17) ////////////////////////////
   }
 
@@ -443,9 +421,9 @@ struct search_within_dll
   SomeObject * operator()( const auto & )
   {
     ///////////////////////// TO-DO (18) //////////////////////////////
-      /// Write the lines of code to search for the object within "my_dll" with a key matching "target_key".  Return a pointer to that
-      /// object immediately upon finding it, or a null pointer when you know the object is not in the container.
-
+    for( auto & elem : my_dll )
+      if( elem.upcCode() == target_key ) return &elem;
+    return nullptr;
     /////////////////////// END-TO-DO (18) ////////////////////////////
   }
 
@@ -468,9 +446,9 @@ struct search_within_sll
   SomeObject * operator()( const auto & )
   {
     ///////////////////////// TO-DO (19) //////////////////////////////
-      /// Write the lines of code to search for the object within "my_sll" with a key matching "target_key".  Return a pointer to that
-      /// object immediately upon finding it, or a null pointer when you know the object is not in the container.
-
+    for( auto & elem : my_sll )
+      if( elem.upcCode() == target_key ) return &elem;
+    return nullptr;
     /////////////////////// END-TO-DO (19) ////////////////////////////
   }
 
@@ -493,9 +471,8 @@ struct search_within_bst
   SomeObject * operator()( const auto & )
   {
     ///////////////////////// TO-DO (20) //////////////////////////////
-      /// Write the lines of code to search for the object within "my_bst" with a key matching "target_key".  Return a pointer to that
-      /// object immediately upon finding it, or a null pointer when you know the object is not in the container.
-
+    auto it = my_bst.find( target_key );
+    return ( it == my_bst.end() ) ? nullptr : &it->second;
     /////////////////////// END-TO-DO (20) ////////////////////////////
   }
 
@@ -518,9 +495,8 @@ struct search_within_hash_table
   SomeObject * operator()( const auto & )
   {
     ///////////////////////// TO-DO (21) //////////////////////////////
-      /// Write the lines of code to search for the object within "my_hash_table" with a key matching "target_key".  Return a pointer to
-      /// that object immediately upon finding it, or a null pointer when you know the object is not in the container.
-
+    auto it = my_hash_table.find( target_key );
+    return ( it == my_hash_table.end() ) ? nullptr : &it->second;
     /////////////////////// END-TO-DO (21) ////////////////////////////
   }
 
