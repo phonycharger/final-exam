@@ -28,11 +28,9 @@ namespace    // unnamed, anonymous namespace
   constexpr bool floating_point_is_equal( T const lhs,  U const rhs,  long double const EPSILON1 = /*1e-12L*/ 1e-4L,  long double const EPSILON2 = 1e-8L ) noexcept
   {
     ///////////////////////// TO-DO (1) //////////////////////////////
-    auto lhs_ld  = static_cast<long double>( lhs );
-    auto rhs_ld  = static_cast<long double>( rhs );
-    auto diff    = std::fabs( lhs_ld - rhs_ld );
-    auto largest = std::max( std::fabs( lhs_ld ), std::fabs( rhs_ld ) );
-    return diff <= EPSILON1 || diff <= largest * EPSILON2;
+auto diff     = std::abs( lhs - rhs );
+auto largest  = std::max( std::abs( lhs ), std::abs( rhs ) );
+return diff <= EPSILON1 || diff <= largest * EPSILON2;
     /////////////////////// END-TO-DO (1) ////////////////////////////
   }
 }    // unnamed, anonymous namespace
@@ -321,10 +319,10 @@ bool GroceryItem::operator==( const GroceryItem & rhs ) const noexcept
   // quickest and then the most likely to be different first.
 
   ///////////////////////// TO-DO (20) //////////////////////////////
-  return  _upcCode     == rhs._upcCode
-       && _brandName   == rhs._brandName
-       && _productName == rhs._productName
-       && floating_point_is_equal( _price, rhs._price );
+return  floating_point_is_equal( _price, rhs._price )
+     && _upcCode     == rhs._upcCode
+     && _brandName   == rhs._brandName
+     && _productName == rhs._productName;
   /////////////////////// END-TO-DO (20) ////////////////////////////
 }
 
