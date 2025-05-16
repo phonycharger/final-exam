@@ -355,21 +355,18 @@ std::istream & operator>>( std::istream & stream, GroceryItem & groceryItem )
 
   char delimiter = '\x{00}';                                          // C++23 delimited escape sequence for the character whose value is zero (the null character)
   ///////////////////////// TO-DO (21) //////////////////////////////
-(void)delimiter;
-
 GroceryItem temp;
-char comma;
 
-if( !( stream >> std::ws >> std::quoted( temp._upcCode ) ) )         { stream.setstate( std::ios::failbit ); return stream; }
-if( !( stream >> std::ws >> comma ) || comma != ',' )                { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> std::quoted( temp._upcCode ) ) )                        { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> delimiter          ) || delimiter != ',' )             { stream.setstate( std::ios::failbit ); return stream; }
 
-if( !( stream >> std::ws >> std::quoted( temp._brandName ) ) )       { stream.setstate( std::ios::failbit ); return stream; }
-if( !( stream >> std::ws >> comma ) || comma != ',' )                { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> std::quoted( temp._brandName ) ) )                     { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> delimiter          ) || delimiter != ',' )             { stream.setstate( std::ios::failbit ); return stream; }
 
-if( !( stream >> std::ws >> std::quoted( temp._productName ) ) )     { stream.setstate( std::ios::failbit ); return stream; }
-if( !( stream >> std::ws >> comma ) || comma != ',' )                { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> std::quoted( temp._productName ) ) )                   { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> delimiter          ) || delimiter != ',' )             { stream.setstate( std::ios::failbit ); return stream; }
 
-if( !( stream >> std::ws >> temp._price ) )                          { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> temp._price ) )                                        { stream.setstate( std::ios::failbit ); return stream; }
 
 groceryItem = std::move( temp );
 return stream;
