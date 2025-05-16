@@ -355,31 +355,24 @@ std::istream & operator>>( std::istream & stream, GroceryItem & groceryItem )
 
   char delimiter = '\x{00}';                                          // C++23 delimited escape sequence for the character whose value is zero (the null character)
   ///////////////////////// TO-DO (21) //////////////////////////////
-  GroceryItem temp{};
-  std::string upc;
-  std::string brand;
-  std::string name;
-  double      price = 0.0;
+(void)delimiter;
 
-  // Read the four fields, each terminated by NUL.
-  if ( std::getline( stream, upc,   delimiter ) &&
-       std::getline( stream, brand, delimiter ) &&
-       std::getline( stream, name,  delimiter ) &&
-       ( stream >> price ) )
-  {
-      stream.get();                      // eat the trailing NUL after price
-      temp = GroceryItem{ std::move( upc ),
-                          std::move( brand ),
-                          std::move( name ),
-                          price };
-      groceryItem = std::move( temp );   // commit
-  }
-  else
-  {
-      stream.setstate( std::ios::failbit );
-  }
+GroceryItem temp;
+char comma;
 
-  return stream;
+if( !( stream >> std::ws >> std::quoted( temp._upcCode ) ) )         { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> comma ) || comma != ',' )                { stream.setstate( std::ios::failbit ); return stream; }
+
+if( !( stream >> std::ws >> std::quoted( temp._brandName ) ) )       { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> comma ) || comma != ',' )                { stream.setstate( std::ios::failbit ); return stream; }
+
+if( !( stream >> std::ws >> std::quoted( temp._productName ) ) )     { stream.setstate( std::ios::failbit ); return stream; }
+if( !( stream >> std::ws >> comma ) || comma != ',' )                { stream.setstate( std::ios::failbit ); return stream; }
+
+if( !( stream >> std::ws >> temp._price ) )                          { stream.setstate( std::ios::failbit ); return stream; }
+
+groceryItem = std::move( temp );
+return stream;
   /////////////////////// END-TO-DO (21) ////////////////////////////
 }
 
